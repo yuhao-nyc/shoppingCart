@@ -1,58 +1,72 @@
-var priceA = 2,
-    priceB = 12,
-    priceC = 1.25,
-    priceD = 0.15,
-    total,
-    volumeA,
-    volumeB,
-    volumeC,
-    volumeD,
-    resultA = volumeA*priceA,
-    resultB = volumeB*priceB,
-    resultC = volumeC*priceC,
-    resultD = volumeD*priceD;
+//products info input
+var volumeA = 4,
+    volumeB = 2,
+    volumeC = 1,
+    volumeD = 1,
+    priceAdis = 1.75,
+    priceCdis = 1,
+    disANum = 4,
+    disCNum = 6,
+    priceA,
+    priceB,
+    priceC,
+    priceD;
 
-if ((volumeA || volumeB || volumeC || volumeD) < 0) {
-    alert('the quantity of product can not be negative');
-    volumeA = 0;
-    volumeB = 0;
-    volumeC = 0;
-    volumeD = 0;
+function setPricing(item, itemPrice) {
+    switch (item) {
+        case 'A':
+            priceA = itemPrice;
+            break;
+        case 'B':
+            priceB = itemPrice;
+            break;
+        case 'C':
+            priceC = itemPrice;
+            break;
+        case 'D':
+            priceD = itemPrice;
+            break;
+    }
 }
 
-//quantity of products input
 //TODO count the item quantity with a countVolume function
-volumeA = 4;
-volumeB = 2;
-volumeC = 1;
-volumeD = 1;
-
-var dividA = volumeA % 4,
-    dividC = volumeC % 6;
-
 function scan(product) {
-    if (product == 'A') {
-       if (volumeA >= 4) {
-            var priceAdis = 7/4;
-            resultA = priceAdis*(volumeA - dividA) + priceA*dividA;
+    var resultA,
+        resultB,
+        resultC,
+        resultD,
+        dividA = volumeA % disANum,
+        dividC = volumeC % disCNum;
+
+    if ((volumeA || volumeB || volumeC || volumeD) < 0) {
+        alert('the quantity of product can not be negative');
+        volumeA = 0;
+        volumeB = 0;
+        volumeC = 0;
+        volumeD = 0;
+    } else if (product == 'A') {
+       if (volumeA > disANum) {
+          resultA = priceAdis*(volumeA - dividA) + priceA*dividA;
+          //with countA/volumeA, just need to return the price conditionally
+       } else if (volumeA < disANum) {
+          resultA = volumeA*priceA;
+       } else if (volumeA == disANum) {
+          resultA = volumeA*priceAdis;
        }
-       return resultA
-    }
-
-    if (product == 'B') {
-        return resultB
-    }
-
-    if (product == 'C') {
-       if (volumeC >= 6) {
-          var priceCdis = 6/6;
+       return resultA;
+    } else if (product == 'B') {
+        return resultB = volumeB*priceB;
+    } else if (product == 'C') {
+       if (volumeC > disCNum) {
           resultC = priceCdis*(volumeC - dividC) + priceC*dividC;
+       } else if (volumeC < disCNum) {
+          resultC = volumeC*priceC;
+       } else if (volumeC == disCNum) {
+          resultC = volumeC*priceCdis;
        }
        return resultC;
-    }
-
-    if (product == 'D') {
-       return resultD;
+    } else if (product == 'D') {
+       return resultD = volumeD*priceD;
     }
 }
 
@@ -60,11 +74,9 @@ function total() {
     return scan('A') + scan('B') + scan('C') + scan('D');
 }
 
-//TODO set prices
-function setPricing(item, itemPrice) {
+setPricing('A', 2);
+setPricing('B', 12);
+setPricing('C', 1.25);
+setPricing('D', 0.15);
 
-}
-
-setPricing('A', 10);
-
-console.log(total())
+console.log(total());
