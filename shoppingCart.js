@@ -1,16 +1,17 @@
 //products info input
+//assume the products pricing and discount info is pre-defined
 var volumeA = 4,
     volumeB = 2,
     volumeC = 1,
     volumeD = 1,
     priceAdis = 1.75,
     priceCdis = 1,
-    disANum = 4,
-    disCNum = 6,
-    priceA,
-    priceB,
-    priceC,
-    priceD;
+    disAVol = 4,
+    disCVol = 6,
+    priceA = 2,
+    priceB = 12,
+    priceC = 1.25,
+    priceD = 0.15;
 
 function setPricing(item, itemPrice) {
     switch (item) {
@@ -29,14 +30,13 @@ function setPricing(item, itemPrice) {
     }
 }
 
-//TODO count the item quantity with a countVolume function
 function scan(product) {
     var resultA,
         resultB,
         resultC,
         resultD,
-        dividA = volumeA % disANum,
-        dividC = volumeC % disCNum;
+        dividA = volumeA % disAVol,
+        dividC = volumeC % disCVol;
 
     if ((volumeA || volumeB || volumeC || volumeD) < 0) {
         alert('the quantity of product can not be negative');
@@ -45,23 +45,22 @@ function scan(product) {
         volumeC = 0;
         volumeD = 0;
     } else if (product == 'A') {
-       if (volumeA > disANum) {
+       if (volumeA > disAVol) {
           resultA = priceAdis*(volumeA - dividA) + priceA*dividA;
-          //with countA/volumeA, just need to return the price conditionally
-       } else if (volumeA < disANum) {
+       } else if (volumeA < disAVol) {
           resultA = volumeA*priceA;
-       } else if (volumeA == disANum) {
+       } else if (volumeA == disAVol) {
           resultA = volumeA*priceAdis;
        }
        return resultA;
     } else if (product == 'B') {
         return resultB = volumeB*priceB;
     } else if (product == 'C') {
-       if (volumeC > disCNum) {
+       if (volumeC > disCVol) {
           resultC = priceCdis*(volumeC - dividC) + priceC*dividC;
-       } else if (volumeC < disCNum) {
+       } else if (volumeC < disCVol) {
           resultC = volumeC*priceC;
-       } else if (volumeC == disCNum) {
+       } else if (volumeC == disCVol) {
           resultC = volumeC*priceCdis;
        }
        return resultC;
@@ -74,9 +73,10 @@ function total() {
     return scan('A') + scan('B') + scan('C') + scan('D');
 }
 
-setPricing('A', 2);
-setPricing('B', 12);
-setPricing('C', 1.25);
-setPricing('D', 0.15);
+setPricing('A', priceA);
+setPricing('B', priceB);
+setPricing('C', priceC);
+setPricing('D', priceD);
 
+//test
 console.log(total());
